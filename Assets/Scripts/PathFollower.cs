@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// A class to be attached to a <see cref="GameObject"/> with child objects
-/// that define the path that another <see cref="GameObject"/> should take.
+/// A class to be attached to a <see cref="GameObject"/> that will be following
+/// the child objects of another <see cref="GameObject"/>.
 /// </summary>
 public class PathFollower : MonoBehaviour {
-	public GameObject controlledCharacter;
+	public GameObject waypointContainer;
 	public float movementSpeed = 2.0f;
+	private GameObject controlledCharacter;
 	private Transform tCharacter;
 	private List<Transform> targets;
 
@@ -16,10 +17,11 @@ public class PathFollower : MonoBehaviour {
 	private void Start() {
 		// Initialize some properties.
 		targets = new List<Transform>();
+		controlledCharacter = this.gameObject;
 		tCharacter = controlledCharacter.transform;
 
 		// Set ourselves as the waypoint container.
-		SetWaypointContainer(this.gameObject);
+		SetWaypointContainer(waypointContainer);
 	}
 
 	// Update is called once per frame
@@ -49,7 +51,7 @@ public class PathFollower : MonoBehaviour {
 		// Go through GameObject childs.
 		foreach (Transform transform in waypointsParent.GetComponentsInChildren<Transform>()) {
 			// Ignore if we got ourself.
-			if (transform.gameObject == this.gameObject)
+			if (transform.gameObject == waypointsParent)
 				continue;
 
 			// Add to the list of targets.
