@@ -8,26 +8,31 @@ using UnityEngine;
 /// </summary>
 public interface IMover {
 	/// <summary>
+	/// Polls the controller in case its needed.
+	/// </summary>
+	void PollDevice();
+
+	/// <summary>
 	/// Should we move the <see cref="GameObject"/> forward?
 	/// </summary>
-	/// <returns><c>True</c> if we should move forward.</returns>
-	bool MoveForward();
+	/// <returns>How much we should move forward.</returns>
+	float MoveForward();
 
 	/// <summary>
 	/// Should we move the <see cref="GameObject"/> backwards?
 	/// </summary>
-	/// <returns><c>True</c> if we should move backwards.</returns>
-	bool MoveBackward();
+	/// <returns>How much we should move backwards.</returns>
+	float MoveBackward();
 
 	/// <summary>
 	/// Should we move the <see cref="GameObject"/> left?
 	/// </summary>
-	/// <returns><c>True</c> if we should move left.</returns>
-	bool MoveLeft();
+	/// <returns>How much we should move to the left.</returns>
+	float MoveLeft();
 
 	/// <summary>
 	/// Should we move the <see cref="GameObject"/> right?
 	/// </summary>
-	/// <returns><c>True</c> if we should move right.</returns>
-	bool MoveRight();
+	/// <returns>How much we should move to the right.</returns>
+	float MoveRight();
 }

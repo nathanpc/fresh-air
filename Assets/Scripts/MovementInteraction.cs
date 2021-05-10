@@ -12,25 +12,18 @@ public class MovementInteraction : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-        control = new KeyboardMover();
+        control = new MicrophoneHubMover();
 	}
 
 	// Update is called once per frame
 	void Update() {
-        if (control.MoveForward()) {
-            this.transform.Translate(Vector3.forward * Time.deltaTime * speed);
-        }
+        // Poll the controller.
+        control.PollDevice();
 
-        if (control.MoveBackward()) {
-            this.transform.Translate(Vector3.back * Time.deltaTime * speed);
-        }
-
-        if (control.MoveLeft()) {
-            this.transform.Translate(Vector3.left * Time.deltaTime * speed);
-        }
-
-        if (control.MoveRight()) {
-            this.transform.Translate(Vector3.right * Time.deltaTime * speed);
-        }
+        // Move the object.
+        this.transform.Translate(Vector3.forward * Time.deltaTime * control.MoveForward() * speed);
+        this.transform.Translate(Vector3.back * Time.deltaTime * control.MoveBackward() * speed);
+        this.transform.Translate(Vector3.left * Time.deltaTime * control.MoveLeft() * speed);
+        this.transform.Translate(Vector3.right * Time.deltaTime * control.MoveRight() * speed);
     }
 }

@@ -8,19 +8,23 @@ using UnityEngine;
 /// </summary>
 /// <inheritdoc/>
 public class KeyboardMover : IMover {
-	public bool MoveBackward() {
-		return Input.GetKey(KeyCode.DownArrow);
+	public float MoveBackward() {
+		return Input.GetKey(KeyCode.DownArrow) ? 1.0f : 0.0f;
 	}
 
-	public bool MoveForward() {
-		return Input.GetKey(KeyCode.UpArrow);
+	public float MoveForward() {
+		return Input.GetKey(KeyCode.UpArrow) ? 1.0f : 0.0f;
 	}
 
-	public bool MoveLeft() {
-		return Input.GetKey(KeyCode.LeftArrow);
+	public float MoveLeft() {
+		return Input.GetKey(KeyCode.LeftArrow) ? 1.0f : 0.0f;
 	}
 
-	public bool MoveRight() {
-		return Input.GetKey(KeyCode.RightArrow);
+	public float MoveRight() {
+		return Input.GetKey(KeyCode.RightArrow) ? 1.0f : 0.0f;
+	}
+
+	public void PollDevice() {
+		// Do nothing.
 	}
 }
