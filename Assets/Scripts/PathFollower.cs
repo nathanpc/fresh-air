@@ -9,6 +9,7 @@ using UnityEngine;
 public class PathFollower : MonoBehaviour {
 	public GameObject waypointContainer;
 	public float movementSpeed = 2.0f;
+	public bool repeat = true;
 	private GameObject controlledCharacter;
 	private Transform tCharacter;
 	private List<Transform> targets;
@@ -20,15 +21,20 @@ public class PathFollower : MonoBehaviour {
 		controlledCharacter = this.gameObject;
 		tCharacter = controlledCharacter.transform;
 
-		// Set ourselves as the waypoint container.
-		SetWaypointContainer(waypointContainer);
+		// Populate the waypoint container.
+		RestartPath();
 	}
 
 	// Update is called once per frame
 	private void Update() {
 		// Check if we have reached our final destination.
-		if (IsAtFinalDestination())
-			return;
+		if (IsAtFinalDestination()) {
+			if (repeat) {
+				RestartPath();
+			} else {
+				return;
+			}
+		}
 
 		// Move to the current waypoint.
 		MoveTowardsWaypoint();
@@ -74,6 +80,14 @@ public class PathFollower : MonoBehaviour {
 	public void MoveToNextWaypoint() {
 		// Remove the first element to go to the next one.
 		targets.RemoveAt(0);
+	}
+
+	/// <summary>
+	/// (Re)starts the object path from the first waypoint.
+	/// </summary>
+	public void RestartPath() {
+		// Set ourselves as the waypoint container.
+		SetWaypointContainer(waypointContainer);
 	}
 
 	/// <summary>
