@@ -9,8 +9,10 @@ using UnityEngine;
 public class PathFollower : MonoBehaviour {
 	public GameObject waypointContainer;
 	public float movementSpeed = 2.0f;
+	public float rotationSpeed = 1.0f;
 	public bool repeat = true;
 	public bool ignoreY = true;
+	public bool ignoreRotation = true;
 	private GameObject controlledCharacter;
 	private Transform tCharacter;
 	private List<Transform> targets;
@@ -75,8 +77,14 @@ public class PathFollower : MonoBehaviour {
 			return;
 
 		// Move our object towards the waypoint.
-		float step = movementSpeed * Time.deltaTime;
-		tCharacter.position = Vector3.MoveTowards(tCharacter.position, targets[0].position, step);
+		float moveStep = movementSpeed * Time.deltaTime;
+		tCharacter.position = Vector3.MoveTowards(tCharacter.position, targets[0].position, moveStep);
+
+		// Rotate the object towards the waypoint.
+		if (!ignoreRotation) {
+			float rotationStep = rotationSpeed * Time.deltaTime;
+			tCharacter.rotation = Quaternion.Lerp(tCharacter.rotation, targets[0].rotation, rotationStep);
+		}
 	}
 
 	/// <summary>

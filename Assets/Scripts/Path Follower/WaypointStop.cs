@@ -7,9 +7,9 @@ using UnityEngine;
 /// for a character to stop for some seconds at that position.
 /// </summary>
 public class WaypointStop : MonoBehaviour {
-	public bool enabled = false;
 	public int stoppedTime = 2;
 	public GameObject controlledObject;
+	private bool enabled = false;
 	private PathFollower follower;
 	private float timeLeft;
 	private bool finished = false;
