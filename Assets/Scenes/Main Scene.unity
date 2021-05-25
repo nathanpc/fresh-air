@@ -21692,6 +21692,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 80099173}
+  - component: {fileID: 80099174}
   m_Layer: 0
   m_Name: Point (2)
   m_TagString: Untagged
@@ -21713,6 +21714,22 @@ Transform:
   m_Father: {fileID: 298967798}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &80099174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80099172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f0c35257cc76f44db13700b52786cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlledObject: {fileID: 1499333565}
+  numberOfTimes: 3
+  jumpForce: 10
+  jumpVector: {x: 0, y: 2, z: 0}
 --- !u!1001 &89035409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51440,6 +51457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1668380408}
+  - component: {fileID: 1668380409}
   m_Layer: 0
   m_Name: Point (3)
   m_TagString: Untagged
@@ -51461,6 +51479,22 @@ Transform:
   m_Father: {fileID: 298967798}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1668380409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668380407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f0c35257cc76f44db13700b52786cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlledObject: {fileID: 1499333565}
+  numberOfTimes: 3
+  jumpForce: 10
+  jumpVector: {x: 0, y: 2, z: 0}
 --- !u!1001 &1705813203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52273,7 +52307,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918730113}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2e7b11d98455404eb43ef728e04bba7, type: 3}
   m_Name: 

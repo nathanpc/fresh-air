@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Transforms the <see cref="GameObject"/> material property.
 /// </summary>
+[RequireComponent(typeof(MeshRenderer))]
 public class TransformMaterial : MonoBehaviour, ITransformation {
 	public GameObject fog;
 	public Material transformedMaterial;

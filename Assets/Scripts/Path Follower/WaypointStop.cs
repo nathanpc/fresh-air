@@ -16,6 +16,9 @@ public class WaypointStop : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
+		if (controlledObject == null)
+			MoreDebug.LogUnassignedReference(this.gameObject, nameof(controlledObject));
+
 		follower = controlledObject.GetComponent<PathFollower>();
 	}
 

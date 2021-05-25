@@ -19,6 +19,9 @@ public class PathFollower : MonoBehaviour {
 
 	// Start is called before the first frame update
 	private void Start() {
+		if (waypointContainer == null)
+			MoreDebug.LogUnassignedReference(this.gameObject, nameof(waypointContainer));
+
 		// Initialize some properties.
 		targets = new List<Transform>();
 		controlledCharacter = this.gameObject;
@@ -124,13 +127,17 @@ public class PathFollower : MonoBehaviour {
 		if (ignoreTimer)
 			return atWaypoint;
 
-		// Stop for a while?
 		if (atWaypoint) {
+			// Stop for a while?
 			WaypointStop stop = targets[0].GetComponent<WaypointStop>();
 			if (stop != null) {
 				stop.StartTimer();
 				return stop.TimesUp();
 			}
+
+			WaypointJump jump = targets[0].GetComponent<WaypointJump>();
+			if (jump != null)
+				jump.StartJump();
 		}
 
 		return atWaypoint;
