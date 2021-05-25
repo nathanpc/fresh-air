@@ -9,7 +9,7 @@ using UnityEngine;
 public class WaypointStop : MonoBehaviour {
 	public int stoppedTime = 2;
 	public GameObject controlledObject;
-	private bool enabled = false;
+	private bool stopEnabled = false;
 	private PathFollower follower;
 	private float timeLeft;
 	private bool finished = false;
@@ -21,7 +21,7 @@ public class WaypointStop : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		if (enabled) {
+		if (stopEnabled) {
 			// Count down.
 			timeLeft -= Time.deltaTime;
 			if (timeLeft < 0)
@@ -34,19 +34,19 @@ public class WaypointStop : MonoBehaviour {
 	/// </summary>
 	public void StartTimer() {
 		// Ignore if we've already started the timer.
-		if (enabled)
+		if (stopEnabled)
 			return;
 
 		timeLeft = stoppedTime;
 		finished = false;
-		enabled = true;
+		stopEnabled = true;
 	}
 
 	/// <summary>
 	/// Stops the "stop" timer.
 	/// </summary>
 	public void StopTimer() {
-		enabled = false;
+		stopEnabled = false;
 		finished = false;
 		timeLeft = stoppedTime;
 	}
