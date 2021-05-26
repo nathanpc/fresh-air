@@ -143,7 +143,7 @@ MonoBehaviour:
     name: tree_02
   - gameObject: {fileID: 919132149155446097, guid: 8e9617dd1a624044592a3b0cd8ac6870, type: 3}
     settings:
-      m_Strength: 1.5
+      m_Strength: 3.75
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 0, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -191,7 +191,7 @@ MonoBehaviour:
     name: tree_07
   - gameObject: {fileID: 919132149155446097, guid: 55dcfc0eeff00fa4f917d1ceba8561a1, type: 3}
     settings:
-      m_Strength: 12.852114
+      m_Strength: 33.10211
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 0, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -207,7 +207,7 @@ MonoBehaviour:
     name: tree_08
   - gameObject: {fileID: 919132149155446097, guid: 990f983154bc65440adcdc98798e75ec, type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 46
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 0, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
