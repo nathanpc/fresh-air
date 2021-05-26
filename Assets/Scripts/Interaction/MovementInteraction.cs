@@ -8,15 +8,31 @@ using UnityEngine;
 /// </summary>
 public class MovementInteraction : MonoBehaviour {
     public int speed = 1;
+    public bool useKeyboard = false;
 	private IMover control;
+    private PathFollower follower;
 
-	// Start is called before the first frame update
-	void Start() {
-        control = new MicrophoneHubMover();
+    // Start is called before the first frame update
+    void Start() {
+        // Get the object's Path Follower.
+        follower = this.GetComponent<PathFollower>();
+        if (follower == null)
+            MoreDebug.LogComponentNotFound(this.gameObject, "Path Follower");
+
+        // Determine which method of control to use.
+        if (useKeyboard) {
+            control = new KeyboardMover();
+        } else {
+            control = new MicrophoneHubMover();
+        }
 	}
 
 	// Update is called once per frame
 	void Update() {
+        // Check if we can start moving on our own.
+        if (!follower.IsAtFinalDestination())
+            return;
+
         // Poll the controller.
         control.PollDevice();
 

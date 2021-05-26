@@ -11,6 +11,7 @@ public class TransformMaterial : MonoBehaviour, ITransformation {
 	public Material transformedMaterial;
 	private Material oldMaterial;
 	private bool transformed = false;
+	private float insideDistance = 33.0f;
 
 	// Start is called before the first frame update
 	void Start() {
@@ -39,7 +40,6 @@ public class TransformMaterial : MonoBehaviour, ITransformation {
 	/// </summary>
 	private bool InsideFog() {
 		// Check if the distance from the fog is less than its radius.
-		return Vector3.Distance(transform.position, fog.transform.position) <=
-			(fog.GetComponent<MeshRenderer>().bounds.extents.magnitude / 2);
+		return Vector3.Distance(transform.position, fog.transform.position) < insideDistance;
 	}
 }
