@@ -79,6 +79,11 @@ public class PathFollower : MonoBehaviour {
 		if (IsAtWaypoint(true))
 			return;
 
+		// Fix problems with glitches when ignoring the Y.
+		if (ignoreY)
+			targets[0].position = new Vector3(targets[0].position.x, tCharacter.position.y,
+				targets[0].position.z);
+
 		// Move our object towards the waypoint.
 		float moveStep = movementSpeed * Time.deltaTime;
 		tCharacter.position = Vector3.MoveTowards(tCharacter.position, targets[0].position, moveStep);
