@@ -7,8 +7,9 @@ using UnityEngine;
 /// using the specified control interface.
 /// </summary>
 public class MovementInteraction : MonoBehaviour {
-    public int speed = 1;
     public bool useKeyboard = false;
+    public int speed = 1;
+    public string serialPort;
 	private IMover control;
     private PathFollower follower;
 
@@ -23,18 +24,18 @@ public class MovementInteraction : MonoBehaviour {
         if (useKeyboard) {
             control = new KeyboardMover();
         } else {
-            control = new MicrophoneHubMover();
+            control = new MicrophoneHubMover(serialPort);
         }
 	}
 
 	// Update is called once per frame
 	void Update() {
+        // Poll the controller.
+        control.PollDevice();
+
         // Check if we can start moving on our own.
         if (!follower.IsAtFinalDestination())
             return;
-
-        // Poll the controller.
-        control.PollDevice();
 
         // Move the object.
         this.transform.Translate(Vector3.forward * Time.deltaTime * control.MoveForward() * speed);
