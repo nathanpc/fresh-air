@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO.Ports;
+using static SerialComms;
 
 /// <summary>
 /// Controls DMX devices using a MintyDMX controller.
@@ -9,7 +10,7 @@ using System.IO.Ports;
 public class DMXController : MonoBehaviour {
 	public SerialPort serial;
 	public string port;
-	public int baudRate = 115200;
+	public BaudRate baudRate = BaudRate.B115200;
 	private string controlLine = "";
 	private string queuedCommand = "";
 	private bool armed = false;
@@ -17,7 +18,7 @@ public class DMXController : MonoBehaviour {
 	// Start is called before the first frame update
 	void Start() {
 		Debug.Log("Initializing DMX controller serial port " + port);
-		serial = new SerialPort(port, baudRate);
+		serial = new SerialPort(port, (int)baudRate);
 		serial.Open();
 		Debug.Log("DMX controller serial connection estabilished.");
 		
