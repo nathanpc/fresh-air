@@ -117,4 +117,12 @@ public class DMXController : MonoBehaviour {
 	private bool IsReadyToSend() {
 		return armed;
 	}
+
+	/// <summary>
+	/// Checks if the serial port has been opened already.
+	/// </summary>
+	/// <returns>Is the serial port open?</returns>
+	public bool IsSerialOpen() {
+		return serial.IsOpen;
+	}
 }
