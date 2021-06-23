@@ -24,6 +24,10 @@ public class KeyboardMover : IMover {
 		return Input.GetKey(KeyCode.RightArrow) ? 1.0f : 0.0f;
 	}
 
+	public void OnQuit() {
+		// Do nothing.
+	}
+
 	public void PollDevice() {
 		// Do nothing.
 	}

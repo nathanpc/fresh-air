@@ -19,10 +19,10 @@ public class MicrophoneHubMover : IMover {
 
 	public MicrophoneHubMover(string serialPort) {
 		port = serialPort;
-		Debug.Log("Initializing serial port " + port);
+		Debug.Log("Initializing microphone controller serial port " + port);
 		serial = new SerialPort(port, 9600);
 		serial.Open();
-		Debug.Log("Serial connection estabilished.");
+		Debug.Log("Microphone controller serial connection estabilished.");
 	}
 
 	public void PollDevice() {
@@ -71,5 +71,11 @@ public class MicrophoneHubMover : IMover {
 
 	public float MoveRight() {
 		return right;
+	}
+
+	public void OnQuit() {
+		// Close the serial port.
+		if (serial.IsOpen)
+			serial.Close();
 	}
 }

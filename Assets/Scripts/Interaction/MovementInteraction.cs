@@ -10,7 +10,7 @@ public class MovementInteraction : MonoBehaviour {
     public bool useKeyboard = false;
     public int speed = 1;
     public string serialPort;
-	private IMover control;
+    private IMover control;
     private PathFollower follower;
 
     // Start is called before the first frame update
@@ -26,10 +26,10 @@ public class MovementInteraction : MonoBehaviour {
         } else {
             control = new MicrophoneHubMover(serialPort);
         }
-	}
+    }
 
-	// Update is called once per frame
-	void Update() {
+    // Update is called once per frame
+    void Update() {
         // Poll the controller.
         control.PollDevice();
 
@@ -42,5 +42,11 @@ public class MovementInteraction : MonoBehaviour {
         this.transform.Translate(Vector3.back * Time.deltaTime * control.MoveBackward() * speed);
         this.transform.Translate(Vector3.left * Time.deltaTime * control.MoveLeft() * speed);
         this.transform.Translate(Vector3.right * Time.deltaTime * control.MoveRight() * speed);
+    }
+
+    // Application is about to quit
+    void OnApplicationQuit() {
+        // Clean up.
+        control.OnQuit();
     }
 }

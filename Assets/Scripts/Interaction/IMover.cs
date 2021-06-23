@@ -13,6 +13,12 @@ public interface IMover {
 	void PollDevice();
 
 	/// <summary>
+	/// Performs some functions when the application is about to close. Great
+	/// for cleaning things up.
+	/// </summary>
+	void OnQuit();
+
+	/// <summary>
 	/// Should we move the <see cref="GameObject"/> forward?
 	/// </summary>
 	/// <returns>How much we should move forward.</returns>
