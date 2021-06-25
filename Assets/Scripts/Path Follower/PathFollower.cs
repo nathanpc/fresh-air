@@ -13,6 +13,7 @@ public class PathFollower : MonoBehaviour {
 	public bool repeat = true;
 	public bool ignoreY = true;
 	public bool ignoreRotation = true;
+	public bool showDebug = false;
 	private GameObject controlledCharacter;
 	private Transform tCharacter;
 	private List<Transform> targets;
@@ -47,7 +48,7 @@ public class PathFollower : MonoBehaviour {
 
 		// Check if we have reached our waypoint.
 		if (IsAtWaypoint()) {
-			if (Debug.isDebugBuild)
+			if (showDebug)
 				Debug.Log("Arrived at: " + targets[0].gameObject.name);
 
 			// Move to the next waypoint.

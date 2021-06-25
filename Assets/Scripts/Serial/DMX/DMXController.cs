@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO.Ports;
 using static SerialComms;
+using System;
 
 /// <summary>
 /// Controls DMX devices using a MintyDMX controller.
@@ -27,38 +28,42 @@ public class DMXController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		// Read whatever is in the serial buffer.
-		controlLine += serial.ReadExisting();
+		try {
+			// Read whatever is in the serial buffer.
+			controlLine += serial.ReadExisting();
 
-		// Check if we have a newline in the buffer.
-		if (IsReadyToSend() && controlLine.Contains(">")) {
-			// IT'S GO TIME! Drop everything!
-			controlLine = "";
+			// Check if we have a newline in the buffer.
+			if (IsReadyToSend() && controlLine.Contains(">")) {
+				// IT'S GO TIME! Drop everything!
+				controlLine = "";
 
-			// Send the command if there is one.
-			if (queuedCommand.Length > 0)
-				serial.Write(queuedCommand);
+				// Send the command if there is one.
+				if (queuedCommand.Length > 0)
+					serial.Write(queuedCommand);
 
-			// Disarm and wait for the next command.
-			Disarm();
-		} else if (controlLine.Contains("\n")) {
-			// Split the lines and get the values from the last line received.
-			string[] lines = controlLine.Split('\n');
+				// Disarm and wait for the next command.
+				Disarm();
+			} else if (controlLine.Contains("\n")) {
+				// Split the lines and get the values from the last line received.
+				string[] lines = controlLine.Split('\n');
 
-			// Check if we got any errors from the controller.
-			if (controlLine.Contains("ERROR")) {
-				Debug.LogError(lines[0]);
-			} else if (controlLine.Contains("OK")) {
-				// Just ignore the OK replies.
-			} else {
-				Debug.Log(lines[0]);
+				// Check if we got any errors from the controller.
+				if (controlLine.Contains("ERROR")) {
+					Debug.LogError(lines[0]);
+				} else if (controlLine.Contains("OK")) {
+					// Just ignore the OK replies.
+				} else {
+					Debug.Log(lines[0]);
+				}
+
+				// Put the rest of the data back into our own buffer.
+				controlLine = controlLine.Substring(controlLine.IndexOf('\n') + 1);
+
+				// Disarm and wait for the next command.
+				Disarm();
 			}
-
-			// Put the rest of the data back into our own buffer.
-			controlLine = controlLine.Substring(controlLine.IndexOf('\n') + 1);
-
-			// Disarm and wait for the next command.
-			Disarm();
+		} catch (TimeoutException) {
+			// Just ignore the serial read timeout. It just means we didn't receive anything this time.
 		}
 	}
 
@@ -67,6 +72,15 @@ public class DMXController : MonoBehaviour {
 		// Close the serial port.
 		if (serial.IsOpen)
 			serial.Close();
+	}
+
+	/// <summary>
+	/// Sets the output state of an auxiliary channel.
+	/// </summary>
+	/// <param name="channel">Auxiliary port channel.</param>
+	/// <param name="value">Value to set it to.</param>
+	public void SetAuxOutput(int channel, int value) {
+		QueueCommand("ASO " + channel + " " + value);
 	}
 
 	/// <summary>
