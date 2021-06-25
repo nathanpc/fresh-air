@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO.Ports;
 using static SerialComms;
 using System;
+using System.Threading;
 
 /// <summary>
 /// Controls DMX devices using a MintyDMX controller.
@@ -18,11 +19,13 @@ public class DMXController : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
+		// Initialize the serial port.
 		Debug.Log("Initializing DMX controller serial port " + port);
 		serial = new SerialPort(port, (int)baudRate);
 		serial.Open();
 		Debug.Log("DMX controller serial connection estabilished.");
 		
+		// Start from a known state.
 		Disarm();
 	}
 

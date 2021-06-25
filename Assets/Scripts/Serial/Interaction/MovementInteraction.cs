@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 /// <summary>
@@ -12,6 +13,7 @@ public class MovementInteraction : MonoBehaviour {
     public string serialPort;
     private IMover control;
     private PathFollower follower;
+    private Thread poolThread;
 
     // Start is called before the first frame update
     void Start() {
@@ -26,13 +28,14 @@ public class MovementInteraction : MonoBehaviour {
         } else {
             control = new MicrophoneHubMover(serialPort);
         }
+
+        // Setup and start the serial communication polling thread.
+        poolThread = new Thread(new ThreadStart(SerialPoll));
+        poolThread.Start();
     }
 
     // Update is called once per frame
     void Update() {
-        // Poll the controller.
-        control.PollDevice();
-
         // Check if we can start moving on our own.
         if (!follower.IsAtFinalDestination())
             return;
@@ -48,5 +51,14 @@ public class MovementInteraction : MonoBehaviour {
     void OnApplicationQuit() {
         // Clean up.
         control.OnQuit();
+    }
+
+    /// <summary>
+    /// Polls the device in a separate thread.
+    /// </summary>
+    public void SerialPoll() {
+        // Poll the controller.
+        while (true)
+            control.PollDevice();
     }
 }
