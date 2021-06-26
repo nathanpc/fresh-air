@@ -6,20 +6,14 @@ using UnityEngine;
 /// A class to be attached to a waypoint <see cref="GameObject"/> in order
 /// for a character to stop for some seconds at that position.
 /// </summary>
-public class WaypointStop : MonoBehaviour {
+public class WaypointStop : WaypointBase {
 	public int stoppedTime = 2;
-	public GameObject controlledObject;
 	private bool stopEnabled = false;
-	private PathFollower follower;
 	private float timeLeft;
 	private bool finished = false;
 
 	// Start is called before the first frame update
 	void Start() {
-		if (controlledObject == null)
-			MoreDebug.LogUnassignedReference(this.gameObject, nameof(controlledObject));
-
-		follower = controlledObject.GetComponent<PathFollower>();
 	}
 
 	// Update is called once per frame
@@ -40,9 +34,13 @@ public class WaypointStop : MonoBehaviour {
 		if (stopEnabled)
 			return;
 
+		// Setup the timer.
 		timeLeft = stoppedTime;
 		finished = false;
 		stopEnabled = true;
+
+		// Stop animation.
+		anim.SetTrigger("Stop");
 	}
 
 	/// <summary>
