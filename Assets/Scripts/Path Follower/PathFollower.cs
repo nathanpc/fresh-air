@@ -12,11 +12,15 @@ public class PathFollower : MonoBehaviour {
 	public float rotationSpeed = 1.0f;
 	public bool repeat = true;
 	public bool ignoreY = true;
-	public bool ignoreRotation = true;
+	public bool ignoreRotation = false;
+	public bool useWaypointRotation = false;
 	public bool showDebug = false;
 	private GameObject controlledCharacter;
 	private Transform tCharacter;
 	private List<Transform> targets;
+	private Animator anim;
+	private Vector3 characterForward;
+	private WaypointAnimation lastWaypointAnimation;
 
 	// Start is called before the first frame update
 	private void Start() {
@@ -27,6 +31,8 @@ public class PathFollower : MonoBehaviour {
 		targets = new List<Transform>();
 		controlledCharacter = this.gameObject;
 		tCharacter = controlledCharacter.transform;
+		anim = controlledCharacter.GetComponent<Animator>();
+		characterForward = tCharacter.forward;
 
 		// Populate the waypoint container.
 		RestartPath();
@@ -39,6 +45,14 @@ public class PathFollower : MonoBehaviour {
 			if (repeat) {
 				RestartPath();
 			} else {
+				// Deal with the final animation.
+				if (lastWaypointAnimation == null) {
+					anim.SetTrigger("Stop");
+				} else {
+					anim.SetTrigger("Stop");
+					lastWaypointAnimation.TriggerAnimation();
+				}
+
 				return;
 			}
 		}
@@ -92,7 +106,16 @@ public class PathFollower : MonoBehaviour {
 		// Rotate the object towards the waypoint.
 		if (!ignoreRotation) {
 			float rotationStep = rotationSpeed * Time.deltaTime;
-			tCharacter.rotation = Quaternion.Lerp(tCharacter.rotation, targets[0].rotation, rotationStep);
+
+			// Use waypoint rotation?
+			if (useWaypointRotation) {
+				tCharacter.rotation = Quaternion.Lerp(tCharacter.rotation, targets[0].rotation, rotationStep);
+			} else {
+				// Rotate towards the next waypoint.
+				//Vector3 direction = targets[0].position - tCharacter.position;
+				//Quaternion toRotation = Quaternion.FromToRotation(characterForward, direction);
+				//tCharacter.rotation = Quaternion.RotateTowards(tCharacter.rotation, toRotation, 10);
+			}
 		}
 	}
 
@@ -100,8 +123,17 @@ public class PathFollower : MonoBehaviour {
 	/// Starts moving the character to its next waypoint.
 	/// </summary>
 	public void MoveToNextWaypoint() {
+		// Remember the last animation.
+		lastWaypointAnimation = targets[0].GetComponent<WaypointAnimation>();
+
 		// Remove the first element to go to the next one.
 		targets.RemoveAt(0);
+
+		characterForward = tCharacter.forward;
+		if (targets.Count > 0) {
+			tCharacter.LookAt(targets[0].position);
+			anim.SetTrigger("Run");
+		}
 	}
 
 	/// <summary>
@@ -110,6 +142,9 @@ public class PathFollower : MonoBehaviour {
 	public void RestartPath() {
 		// Set ourselves as the waypoint container.
 		SetWaypointContainer(waypointContainer);
+
+		// Run animation.
+		anim.SetTrigger("Run");
 	}
 
 	/// <summary>
@@ -137,13 +172,21 @@ public class PathFollower : MonoBehaviour {
 			// Stop for a while?
 			WaypointStop stop = targets[0].GetComponent<WaypointStop>();
 			if (stop != null) {
+				stop.SetPathFollower(this);
 				stop.StartTimer();
 				return stop.TimesUp();
 			}
 
-			WaypointJump jump = targets[0].GetComponent<WaypointJump>();
-			if (jump != null)
-				jump.StartJump();
+			//WaypointJump jump = targets[0].GetComponent<WaypointJump>();
+			//if (jump != null)
+			//	jump.StartJump();
+
+			// A little animation?
+			WaypointAnimation wayAnim = targets[0].GetComponent<WaypointAnimation>();
+			if (wayAnim != null) {
+				wayAnim.SetPathFollower(this);
+				wayAnim.TriggerAnimation();
+			}
 		}
 
 		return atWaypoint;
@@ -155,5 +198,21 @@ public class PathFollower : MonoBehaviour {
 	/// <returns><code>True</code> if the character is at its final destination.</returns>
 	public bool IsAtFinalDestination() {
 		return targets.Count == 0;
+	}
+
+	/// <summary>
+	/// Gets the <see cref="GameObject"/> of the character that this path follower is controlling.
+	/// </summary>
+	/// <returns><see cref="GameObject"/> of the character.</returns>
+	public GameObject GetControlledCharacter() {
+		return controlledCharacter;
+	}
+
+	/// <summary>
+	/// Gets the character <see cref="Animator"/> object.
+	/// </summary>
+	/// <returns>Attached character <see cref="Animator"/> object.</returns>
+	public Animator GetAnimator() {
+		return anim;
 	}
 }
