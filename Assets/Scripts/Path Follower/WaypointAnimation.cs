@@ -19,6 +19,13 @@ public class WaypointAnimation : WaypointBase {
 	/// Triggers the animation.
 	/// </summary>
 	public void TriggerAnimation() {
+		if (follower.showDebug)
+			Debug.Log("Animation Waypoint: Play " + animationName + " animation");
 		anim.SetTrigger(animationName);
+	}
+
+	/// <inheritdoc/>
+	public override string WaypointType() {
+		return "Animation";
 	}
 }

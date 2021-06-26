@@ -21,6 +21,7 @@ public class PathFollower : MonoBehaviour {
 	private Animator anim;
 	private Vector3 characterForward;
 	private WaypointAnimation lastWaypointAnimation;
+	private bool stopLastAnimation = false;
 
 	// Start is called before the first frame update
 	private void Start() {
@@ -45,12 +46,20 @@ public class PathFollower : MonoBehaviour {
 			if (repeat) {
 				RestartPath();
 			} else {
-				// Deal with the final animation.
-				if (lastWaypointAnimation == null) {
-					anim.SetTrigger("Stop");
-				} else {
-					anim.SetTrigger("Stop");
-					lastWaypointAnimation.TriggerAnimation();
+				if (!stopLastAnimation) {
+					// Deal with the final animation.
+					if (lastWaypointAnimation == null) {
+						if (showDebug)
+							Debug.Log("Path Follower: Final waypoint no last animation play stop animation");
+						anim.SetTrigger("Stop");
+					} else {
+						if (showDebug)
+							Debug.Log("Path Follower: Final waypoint no last animation play stop animation");
+						anim.SetTrigger("Stop");
+						lastWaypointAnimation.TriggerAnimation();
+					}
+
+					stopLastAnimation = true;
 				}
 
 				return;
@@ -123,8 +132,10 @@ public class PathFollower : MonoBehaviour {
 	/// Starts moving the character to its next waypoint.
 	/// </summary>
 	public void MoveToNextWaypoint() {
-		// Remember the last animation.
-		lastWaypointAnimation = targets[0].GetComponent<WaypointAnimation>();
+		// Remember the last animation and waypoint.
+		WaypointBase lastWaypoint = targets[0].GetComponent<WaypointBase>();
+		if (lastWaypoint != null)
+			lastWaypointAnimation = lastWaypoint.GetComponent<WaypointAnimation>();
 
 		// Remove the first element to go to the next one.
 		targets.RemoveAt(0);
@@ -132,7 +143,12 @@ public class PathFollower : MonoBehaviour {
 		characterForward = tCharacter.forward;
 		if (targets.Count > 0) {
 			tCharacter.LookAt(targets[0].position);
-			anim.SetTrigger("Run");
+
+			if (lastWaypoint != null) {
+				if (showDebug)
+					Debug.Log("Path Follower: Move to next waypoint play run animation");
+				anim.SetTrigger("Run");
+			}
 		}
 	}
 
@@ -142,8 +158,11 @@ public class PathFollower : MonoBehaviour {
 	public void RestartPath() {
 		// Set ourselves as the waypoint container.
 		SetWaypointContainer(waypointContainer);
+		stopLastAnimation = false;
 
 		// Run animation.
+		if (showDebug)
+			Debug.Log("Path Follower: Restart play run animation");
 		anim.SetTrigger("Run");
 	}
 
@@ -174,7 +193,6 @@ public class PathFollower : MonoBehaviour {
 			if (stop != null) {
 				stop.SetPathFollower(this);
 				stop.StartTimer();
-				return stop.TimesUp();
 			}
 
 			//WaypointJump jump = targets[0].GetComponent<WaypointJump>();
@@ -187,6 +205,10 @@ public class PathFollower : MonoBehaviour {
 				wayAnim.SetPathFollower(this);
 				wayAnim.TriggerAnimation();
 			}
+
+			// Make sure we can continue after a stop.
+			if (stop != null)
+				return stop.TimesUp();
 		}
 
 		return atWaypoint;

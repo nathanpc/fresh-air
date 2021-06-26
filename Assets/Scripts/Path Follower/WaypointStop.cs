@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class WaypointStop : WaypointBase {
 	public int stoppedTime = 2;
+	public string stoppedAnimation = "Stop";
 	private bool stopEnabled = false;
 	private float timeLeft;
 	private bool finished = false;
@@ -40,7 +41,12 @@ public class WaypointStop : WaypointBase {
 		stopEnabled = true;
 
 		// Stop animation.
+		if (follower.showDebug)
+			Debug.Log("Stop Waypoint: Play stop animation");
 		anim.SetTrigger("Stop");
+		if (follower.showDebug)
+			Debug.Log("Stop Waypoint: Play " + stoppedAnimation + " animation");
+		anim.SetTrigger(stoppedAnimation);
 	}
 
 	/// <summary>
@@ -58,5 +64,10 @@ public class WaypointStop : WaypointBase {
 	/// <returns>Is the time up?</returns>
 	public bool TimesUp() {
 		return finished;
+	}
+
+	/// <inheritdoc/>
+	public override string WaypointType() {
+		return "Stop";
 	}
 }

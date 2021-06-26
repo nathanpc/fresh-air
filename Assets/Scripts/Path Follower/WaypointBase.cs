@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,5 +29,13 @@ public class WaypointBase : MonoBehaviour {
 		this.follower = follower;
 		controlledObject = follower.GetControlledCharacter();
 		anim = follower.GetAnimator();
+	}
+
+	/// <summary>
+	/// Gets the type of waypoint.
+	/// </summary>
+	/// <returns>Name of the waypoint type.</returns>
+	public virtual string WaypointType() {
+		throw new NotImplementedException();
 	}
 }
