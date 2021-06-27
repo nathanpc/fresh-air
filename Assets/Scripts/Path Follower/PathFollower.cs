@@ -49,10 +49,18 @@ public class PathFollower : MonoBehaviour {
 				if (!stopLastAnimation) {
 					// Deal with the final animation.
 					if (lastWaypointAnimation == null) {
+						// Do nothing if there isn't an animator.
+						if (anim == null)
+							return;
+
 						if (showDebug)
 							Debug.Log("Path Follower: Final waypoint no last animation play stop animation");
 						anim.SetTrigger("Stop");
 					} else {
+						// Do nothing if there isn't an animator.
+						if (anim == null)
+							return;
+
 						if (showDebug)
 							Debug.Log("Path Follower: Final waypoint no last animation play stop animation");
 						anim.SetTrigger("Stop");
@@ -146,6 +154,10 @@ public class PathFollower : MonoBehaviour {
 				tCharacter.LookAt(targets[0].position);
 
 			if (lastWaypoint != null) {
+				// Do nothing if there isn't an animator.
+				if (anim == null)
+					return;
+
 				if (showDebug)
 					Debug.Log("Path Follower: Move to next waypoint play run animation");
 				anim.SetTrigger("Run");
@@ -160,6 +172,10 @@ public class PathFollower : MonoBehaviour {
 		// Set ourselves as the waypoint container.
 		SetWaypointContainer(waypointContainer);
 		stopLastAnimation = false;
+
+		// Do nothing if there isn't an animator.
+		if (anim == null)
+			return;
 
 		// Run animation.
 		if (showDebug)
@@ -205,6 +221,13 @@ public class PathFollower : MonoBehaviour {
 			if (wayAnim != null) {
 				wayAnim.SetPathFollower(this);
 				wayAnim.TriggerAnimation();
+			}
+
+			// A change of speed maybe?
+			WaypointSpeed speed = targets[0].GetComponent<WaypointSpeed>();
+			if (speed != null) {
+				speed.SetPathFollower(this);
+				speed.SetPathFollowerSpeeds();
 			}
 
 			// Make sure we can continue after a stop.

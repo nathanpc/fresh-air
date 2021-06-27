@@ -19,6 +19,11 @@ public class WaypointAnimation : WaypointBase {
 	/// Triggers the animation.
 	/// </summary>
 	public void TriggerAnimation() {
+		// Do nothing if there isn't an animator.
+		if (anim == null)
+			return;
+
+		// Trigger the animation.
 		if (follower.showDebug)
 			Debug.Log("Animation Waypoint: Play " + animationName + " animation");
 		anim.SetTrigger(animationName);

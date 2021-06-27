@@ -40,6 +40,10 @@ public class WaypointStop : WaypointBase {
 		finished = false;
 		stopEnabled = true;
 
+		// Do nothing if there isn't an animator.
+		if (anim == null)
+			return;
+
 		// Stop animation.
 		if (follower.showDebug)
 			Debug.Log("Stop Waypoint: Play stop animation");
