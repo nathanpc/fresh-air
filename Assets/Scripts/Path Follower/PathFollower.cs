@@ -142,7 +142,8 @@ public class PathFollower : MonoBehaviour {
 
 		characterForward = tCharacter.forward;
 		if (targets.Count > 0) {
-			tCharacter.LookAt(targets[0].position);
+			if (!useWaypointRotation)
+				tCharacter.LookAt(targets[0].position);
 
 			if (lastWaypoint != null) {
 				if (showDebug)
