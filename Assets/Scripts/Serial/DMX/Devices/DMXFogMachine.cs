@@ -8,12 +8,17 @@ public class DMXFogMachine : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-
+		TurnOff();
 	}
 
 	// Update is called once per frame
 	void Update() {
 
+	}
+
+	// Application is about to quit
+	void OnApplicationQuit() {
+		TurnOff();
 	}
 
 	/// <summary>

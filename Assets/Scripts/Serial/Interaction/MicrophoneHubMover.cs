@@ -34,7 +34,7 @@ public class MicrophoneHubMover : IMover {
 			// Split the lines and get the values from the last line received.
 			string[] lines = controlLine.Split('\n');
 			string[] values = lines[0].Replace("\r", "").Split(',');
-			Debug.Log(lines[0]);
+			//Debug.Log(lines[0]);
 
 			// Parse the values received.
 			if (!float.TryParse(values[0], out front))

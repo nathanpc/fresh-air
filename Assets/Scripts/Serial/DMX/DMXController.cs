@@ -13,6 +13,7 @@ public class DMXController : MonoBehaviour {
 	public SerialPort serial;
 	public string port;
 	public BaudRate baudRate = BaudRate.B115200;
+	public bool debugSend = false;
 	private string controlLine = "";
 	private string queuedCommand = "";
 	private bool armed = false;
@@ -41,8 +42,11 @@ public class DMXController : MonoBehaviour {
 				controlLine = "";
 
 				// Send the command if there is one.
-				if (queuedCommand.Length > 0)
+				if (queuedCommand.Length > 0) {
 					serial.Write(queuedCommand);
+					if (debugSend)
+						Debug.Log("DMX Sent: " + queuedCommand);
+				}
 
 				// Disarm and wait for the next command.
 				Disarm();

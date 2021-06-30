@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TowerHutBallista
-  m_Shader: {fileID: 47, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 0b44c770901a9f44ab0c61e5662e3d1a, type: 3}
   m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _SPECGLOSSMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 7835b9acad1a3f044bdf6844396bbd26, type: 3}
+        m_Texture: {fileID: 2800000, guid: d5e2f432909fdc64fa372571538cd3f7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -59,12 +59,16 @@ Material:
         m_Texture: {fileID: 2800000, guid: 24d0580cdb2d66e4991775b34ab26f31, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TransTex:
+        m_Texture: {fileID: 2800000, guid: 7835b9acad1a3f044bdf6844396bbd26, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Glossiness: 0.33
+    - _Glossiness: 0
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
@@ -72,6 +76,7 @@ Material:
     - _Parallax: 0.02
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Transformation: 0
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
