@@ -205,13 +205,6 @@ public class PathFollower : MonoBehaviour {
 			return atWaypoint;
 
 		if (atWaypoint) {
-			// A little smoke.
-			WaypointFogMachine fogMachine = targets[0].GetComponent<WaypointFogMachine>();
-			if (fogMachine != null) {
-				fogMachine.SetPathFollower(this);
-				fogMachine.Operate();
-			}
-
 			// Stop for a while?
 			WaypointStop stop = targets[0].GetComponent<WaypointStop>();
 			if (stop != null) {
@@ -246,20 +239,6 @@ public class PathFollower : MonoBehaviour {
 			if (speed != null) {
 				speed.SetPathFollower(this);
 				speed.SetPathFollowerSpeeds();
-			}
-
-			// Some nice static lighting.
-			WaypointSpotlight spotlight = targets[0].GetComponent<WaypointSpotlight>();
-			if (spotlight != null) {
-				spotlight.SetPathFollower(this);
-				spotlight.Operate();
-			}
-
-			// JUST GO NUTS!
-			WaypointGoNuts nuts = targets[0].GetComponent<WaypointGoNuts>();
-			if (nuts != null) {
-				nuts.SetPathFollower(this);
-				nuts.StartTheShow();
 			}
 
 			// Make sure we can continue after a stop.

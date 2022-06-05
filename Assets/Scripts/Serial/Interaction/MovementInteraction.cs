@@ -8,7 +8,6 @@ using UnityEngine;
 /// using the specified control interface.
 /// </summary>
 public class MovementInteraction : MonoBehaviour {
-    public bool useKeyboard = false;
     public int speed = 1;
     public string serialPort;
     private IMover control;
@@ -22,12 +21,7 @@ public class MovementInteraction : MonoBehaviour {
         if (follower == null)
             MoreDebug.LogComponentNotFound(this.gameObject, "Path Follower");
 
-        // Determine which method of control to use.
-        if (useKeyboard) {
-            control = new KeyboardMover();
-        } else {
-            control = new MicrophoneHubMover(serialPort);
-        }
+        control = new KeyboardMover();
 
         // Setup and start the serial communication polling thread.
         poolThread = new Thread(new ThreadStart(SerialPoll));
