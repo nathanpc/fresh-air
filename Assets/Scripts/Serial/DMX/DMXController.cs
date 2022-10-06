@@ -23,7 +23,7 @@ public class DMXController : MonoBehaviour {
 		// Initialize the serial port.
 		Debug.Log("Initializing DMX controller serial port " + port);
 		serial = new SerialPort(port, (int)baudRate);
-		serial.Open();
+		//serial.Open();
 		Debug.Log("DMX controller serial connection estabilished.");
 		
 		// Start from a known state.
@@ -32,6 +32,7 @@ public class DMXController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		/*
 		try {
 			// Read whatever is in the serial buffer.
 			controlLine += serial.ReadExisting();
@@ -72,13 +73,16 @@ public class DMXController : MonoBehaviour {
 		} catch (TimeoutException) {
 			// Just ignore the serial read timeout. It just means we didn't receive anything this time.
 		}
+		*/
 	}
 
 	// Application is about to quit
 	void OnApplicationQuit() {
+		/*
 		// Close the serial port.
 		if (serial.IsOpen)
 			serial.Close();
+		*/
 	}
 
 	/// <summary>
@@ -112,10 +116,11 @@ public class DMXController : MonoBehaviour {
 	/// Arm the unit to send commands to.
 	/// </summary>
 	private void Arm() {
+		/*
 		// Poke the bear.
 		if (!IsReadyToSend())
 			serial.Write("<");
-
+		*/
 		armed = true;
 	}
 
@@ -144,6 +149,7 @@ public class DMXController : MonoBehaviour {
 	/// </summary>
 	/// <returns>Is the serial port open?</returns>
 	public bool IsSerialOpen() {
-		return serial.IsOpen;
+		//return serial.IsOpen;
+		return false;
 	}
 }

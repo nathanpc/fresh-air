@@ -18,9 +18,9 @@ public class MovementInteraction : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         // Get the object's Path Follower.
-        follower = this.GetComponent<PathFollower>();
-        if (follower == null)
-            MoreDebug.LogComponentNotFound(this.gameObject, "Path Follower");
+        //follower = this.GetComponent<PathFollower>();
+        //if (follower == null)
+        //    MoreDebug.LogComponentNotFound(this.gameObject, "Path Follower");
 
         // Determine which method of control to use.
         if (useKeyboard) {
@@ -37,8 +37,8 @@ public class MovementInteraction : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         // Check if we can start moving on our own.
-        if (!follower.IsAtFinalDestination())
-            return;
+        //if (!follower.IsAtFinalDestination())
+        //    return;
 
         // Move the object.
         this.transform.Translate(Vector3.forward * Time.deltaTime * control.MoveForward() * speed);
